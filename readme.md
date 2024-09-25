@@ -1,3 +1,3 @@
 COMPLETED VERISON.
 GO TO YOUR TERMINAL AND COPY THIS
-`pip install requirements.txt`
+`pip install -r requirements.txt`
