@@ -50,7 +50,32 @@ def get_used_vram():
     vram_used = pynvml.nvmlDeviceGetMemoryInfo(handle).used
     vram_used_gb = vram_used / (1024 ** 3)
     return f'{vram_used_gb:.2f}'
-    
+
+def get_cpu_freq():
+    cpu_freq = psutil.cpu_freq()
+
+    if cpu_freq:
+        return f"(C)CPU Frquency: {cpu_freq.current:.1f}MHz"
+    else:
+        return "Could not retrieve CPU frequency information."
+
+def get_cpu_max_freq():
+    cpu_freq = psutil.cpu_freq()
+
+    if cpu_freq:
+        return f"MinCPU Frequency: {int(cpu_freq.min)}MHz"
+    else:
+        return "Could not retrieve Max CPU frequency information."
+
+def get_cpu_min_freq():
+    cpu_freq = psutil.cpu_freq()
+
+    if cpu_freq:
+        return f"MaxCPU Frequency: {int(cpu_freq.max)}MHz"
+    else:
+        return "Could not retrieve Max CPU frequency information."
+
+
 app = ctk.CTk()
 app.geometry('1000x600')
 app.title('Linux')
@@ -91,6 +116,21 @@ def cpu_temp():
     cpu = psutil.sensors_temperatures()['k10temp'][0][1]
     cpu_label_info1.configure(text=f"CPU Temp: {cpu}°C")
     app.after(1000, cpu_temp)
+
+def cpu_freq():
+    cpu_freqs = get_cpu_freq()
+    cpu_label_info2.configure(text = cpu_freqs)
+    app.after(1000, cpu_freq)
+
+def max_cpu_freq():
+    max_cpu = get_cpu_max_freq()
+    cpu_label_info3.configure(text = max_cpu)
+    app.after(1000, max_cpu_freq)
+
+def min_cpu_freq():
+    min_cpu = get_cpu_min_freq()
+    cpu_label_info4.configure(text = min_cpu)
+    app.after(1000, min_cpu_freq)
 
 def ram_usage():
     ram_usg = psutil.virtual_memory()[2]
@@ -149,6 +189,16 @@ cpu_label_info.grid(row=2, column=0, padx=20)
 cpu_label_info1 = ctk.CTkLabel(app, text = 'CPU Temp: ', text_color = '#884494', font = custom_font)
 cpu_label_info1.grid(row = 3, column = 0, padx = 20)
 
+cpu_label_info2 = ctk.CTkLabel(app, text = 'CPU Freq:', text_color = '#884494', font = ("Arial", 20))
+cpu_label_info2.grid(row = 4, column = 0)
+
+cpu_label_info3 = ctk.CTkLabel(app, text = 'CPU Freq:', text_color = '#884494', font = ("Arial", 20))
+cpu_label_info3.grid(row = 5, column = 0)
+
+cpu_label_info4 = ctk.CTkLabel(app, text = 'CPU Freq:', text_color = '#884494', font = ("Arial", 20))
+cpu_label_info4.grid(row = 6, column = 0)
+
+
 gpu_img = ctk.CTkLabel(app, text='', image=background_image_gpu, bg_color='#2E2E2E', fg_color = 'black')
 gpu_img.grid(row=1, column=1, padx=20, pady=20)
 
@@ -162,7 +212,7 @@ gpu_label_info2 = ctk.CTkLabel(app, text = 'Total VRAM: GB', text_color = '#8844
 gpu_label_info2.grid(row = 4, column = 1, padx = 20)#, pady = 20)
 
 gpu_label_info3 = ctk.CTkLabel(app, text = 'Used VRAM: GB', text_color = '#884494', font = custom_font)
-gpu_label_info3.grid(row = 5, column = 1, padx = 20)#, pady = 20)
+gpu_label_info3.grid(row = 5, column = 1)#, padx = 20)#, pady = 20)
 
 ram_img = ctk.CTkLabel(app, text='', image=background_image_ram, bg_color='#2E2E2E', fg_color = 'black')
 ram_img.grid(row=1, column=2, padx=20, pady=20)
@@ -174,7 +224,7 @@ ram_label_info1 = ctk.CTkLabel(app, text = 'Total RAM: GB', text_color = '#88449
 ram_label_info1.grid(row = 2, column = 2, padx = 20)
 
 ram_label_info2 = ctk.CTkLabel(app, text = 'Used RAM: GB', text_color = '#884494', font = custom_font)
-ram_label_info2.grid(row = 3, column = 2, padx = 20)
+ram_label_info2.grid(row = 3, column = 2)#, padx = 20)
 
 button_tab1 = ctk.CTkButton(app, text = 'System', width = 100, command = switch_to_system, bg_color = 'black')
 button_tab1.grid(row = 0, column = 1, columnspan = 2)
@@ -194,5 +244,8 @@ ram_info()
 ram_info_used()
 tot_vram()
 used_vram()
+cpu_freq()
+max_cpu_freq()
+min_cpu_freq()
 
 app.mainloop()
