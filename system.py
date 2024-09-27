@@ -86,7 +86,7 @@ app.columnconfigure(2, weight=1)
 button_tab1 = ctk.CTkButton(app, text = 'System', width = 100, fg_color = '#6F42C1', hover_color = '#6C757D')
 button_tab1.grid(row = 0, column = 1, columnspan = 2)
 
-button_tab2 = ctk.CTkButton(app, text = 'Monitoring', width = 100, command = switch_to_monitoring)
+button_tab2 = ctk.CTkButton(app, text = 'Monitoring', width = 100, command = switch_to_monitoring, fg_color = '#3ab3b6')
 button_tab2.grid(row = 0, column = 0, columnspan = 2)
 
 label1 = ctk.CTkLabel(app, text='', image=background_image_shutdown, fg_color = 'black')

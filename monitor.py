@@ -226,7 +226,7 @@ ram_label_info1.grid(row = 2, column = 2, padx = 20)
 ram_label_info2 = ctk.CTkLabel(app, text = 'Used RAM: GB', text_color = '#884494', font = custom_font)
 ram_label_info2.grid(row = 3, column = 2)#, padx = 20)
 
-button_tab1 = ctk.CTkButton(app, text = 'System', width = 100, command = switch_to_system, bg_color = 'black')
+button_tab1 = ctk.CTkButton(app, text = 'System', width = 100, command = switch_to_system, bg_color = 'black', fg_color = '#3ab3b6')
 button_tab1.grid(row = 0, column = 1, columnspan = 2)
 
 button_tab2 = ctk.CTkButton(app, text = 'Monitoring', width = 100, bg_color = 'black', fg_color = '#6F42C1', hover_color = '#6C757D')
